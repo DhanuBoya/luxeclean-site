@@ -1,0 +1,102 @@
+<!-- pricing.html with Full Calculator Functionality -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing – LuxeClean Melbourne</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Header -->
+  <header class="bg-white border-b shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="/" class="text-red-500 font-bold text-lg">LuxeClean</a>
+      <nav class="hidden md:flex gap-6 text-sm font-medium">
+        <a href="/services.html" class="hover:text-red-500">Services</a>
+        <a href="/about.html" class="hover:text-red-500">About</a>
+        <a href="/contact.html" class="hover:text-red-500">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <main class="py-16 px-6 max-w-6xl mx-auto">
+    <h1 class="text-4xl font-bold text-center mb-12">LuxeClean Pricing</h1>
+
+    <!-- Calculator -->
+    <section class="mt-8 mb-20">
+      <h2 class="text-2xl font-semibold text-center text-red-500 mb-6">Estimate Your Cleaning Cost</h2>
+      <div class="max-w-xl mx-auto bg-gray-100 p-6 rounded-xl shadow">
+        <label for="type" class="block mb-2 font-medium">Type of Cleaning:</label>
+        <select id="type" class="w-full mb-4 p-2 rounded">
+          <option value="standard">Standard</option>
+          <option value="deep">Deep</option>
+          <option value="express">Express</option>
+        </select>
+
+        <label for="bedrooms" class="block mb-2 font-medium">Property Size:</label>
+        <select id="bedrooms" class="w-full mb-4 p-2 rounded">
+          <option value="1">Studio / 1-Bedroom</option>
+          <option value="2">2-Bedroom</option>
+          <option value="3">3-Bedroom</option>
+          <option value="4">4+ Bedroom</option>
+        </select>
+
+        <label class="block mb-2 font-medium">Add-ons:</label>
+        <div class="mb-4">
+          <label class="block"><input type="checkbox" class="addon" value="20" /> Laundry</label>
+          <label class="block"><input type="checkbox" class="addon" value="30" /> Restocking</label>
+          <label class="block"><input type="checkbox" class="addon" value="50" /> Pet Hair Cleanup</label>
+        </div>
+
+        <div class="text-lg font-semibold">Estimated Total: <span id="totalEstimate">$0</span></div>
+      </div>
+    </section>
+
+    <!-- Booking CTA -->
+    <div class="text-center mt-12">
+      <a href="/#book" class="inline-block px-6 py-3 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition">
+        Book Your Clean Now
+      </a>
+      <p class="text-xs text-gray-500 mt-2">Custom quotes available for large properties or special requests.</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-gray-500 text-sm mt-12 pb-8">
+    &copy; 2025 LuxeClean Melbourne
+  </footer>
+
+  <script>
+    const pricingMatrix = {
+      standard: { 1: 100, 2: 140, 3: 175, 4: 235 },
+      deep: { 1: 170, 2: 220, 3: 295, 4: 410 },
+      express: { 1: 80, 2: 80, 3: 80, 4: 80 }
+    };
+
+    const typeSelect = document.getElementById("type");
+    const sizeSelect = document.getElementById("bedrooms");
+    const addOns = document.querySelectorAll(".addon");
+    const totalDisplay = document.getElementById("totalEstimate");
+
+    function updateEstimate() {
+      const type = typeSelect.value;
+      const size = parseInt(sizeSelect.value);
+      let base = pricingMatrix[type][size] || 0;
+      addOns.forEach(c => { if (c.checked) base += parseInt(c.value); });
+      totalDisplay.innerText = `$${base}`;
+    }
+
+    typeSelect.addEventListener("change", updateEstimate);
+    sizeSelect.addEventListener("change", updateEstimate);
+    addOns.forEach(cb => cb.addEventListener("change", updateEstimate));
+    updateEstimate();
+  </script>
+</body>
+</html>
+
+
